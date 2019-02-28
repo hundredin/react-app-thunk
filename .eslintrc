@@ -1,0 +1,79 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "prettier/react",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/react"
+  ],
+  "parser": "babel-eslint",
+  "plugins": ["import", "react", "prettier"],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jest": true,
+    "jquery": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "generators": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "strict": "off",
+    "import/no-unresolved": [
+      "error",
+      {
+        "commonjs": true,
+        "amd": true
+      }
+    ],
+    "import/named": "error",
+    "import/namespace": "error",
+    "import/default": "error",
+    "import/export": "error",
+    "import/no-named-as-default": "warn",
+    "import/no-named-as-default-member": "warn",
+    "import/no-duplicates": "error",
+    "import/unambiguous": "warn",
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": ["log"]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  },
+  // global ignore values
+  "globals": {
+    "__LOCAL__": true,
+    "__DEV__": true,
+    "__SANDBOX__": true,
+    "__STAGE__": true,
+    "__PRODUCTION__": true,
+    "__NOT_PRODUCTION__": true,
+    "__VERSION__": true
+  }
+}
