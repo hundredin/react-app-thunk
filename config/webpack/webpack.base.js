@@ -1,6 +1,8 @@
 const webpack = require('webpack')
+const devMode = process.env.NODE_ENV !== 'production'
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = options => ({
   entry: options.entry,
@@ -15,6 +17,29 @@ module.exports = options => ({
           cacheDirectory: true,
           cacheCompression: false
         }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            query: { importLoaders: 1 }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [
+                require('postcss-preset-env')(),
+                require('postcss-import')({ addDependencyTo: webpack }),
+                require('postcss-url')(),
+                // require('postcss-reporter')(),
+                // require('postcss-browser-reporter')()
+              ]
+            }
+          }
+        ]
       },
       {
         test: /\.(woff|woff2|ttf|eot|otf)/,
@@ -49,6 +74,9 @@ module.exports = options => ({
     extensions: ['.js', '.jsx']
   },
   plugins: options.plugins.concat([
+    new MiniCssExtractPlugin({
+      filename: devMode ? '[name].css' : 'style.[hash].css'
+    }),
     new webpack.ProvidePlugin({
       React: 'react',
       $: 'jquery'
